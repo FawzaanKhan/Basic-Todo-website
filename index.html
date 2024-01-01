@@ -1,0 +1,184 @@
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e8eff1;
+            text-align: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        #tittle, #Description {
+            padding: 10px;
+            width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #5b8c85;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px #466d6a;
+        }
+
+        button:hover {
+            background-color: #466d6a;
+        }
+
+        #container {
+            margin-top: 20px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .todo-item {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .todo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .todo-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .todo-description {
+            margin-bottom: 10px;
+        }
+
+     
+
+        .completed {
+            text-decoration: line-through;
+            color: #a0a0a0;
+            background-color: #f0f0f0;
+        }
+
+        .app-container {
+    max-width: 600px; /* Maximum width of the app */
+    margin: auto; /* Centering the app */
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+/* Responsiveness for tablets */
+@media (max-width: 768px) {
+    .app-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    input[type="text"] {
+        width: calc(100% - 20px); /* Full width minus padding */
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+/* Responsiveness for mobile phones */
+@media (max-width: 480px) {
+    input[type="text"], button {
+        width: calc(100% - 20px); /* Full width minus padding */
+    }
+}
+
+    </style>
+</head>
+<body>
+    <script>
+        let globalId = 1;
+
+        function createChild(title, description, id) {
+            const child = document.createElement("div");
+            child.className = "todo-item";
+            child.setAttribute("id", id);
+
+            const titleDiv = document.createElement("div");
+            titleDiv.innerHTML = title;
+            titleDiv.className = "todo-title";
+
+            const descriptionDiv = document.createElement("div");
+            descriptionDiv.innerHTML = description;
+            descriptionDiv.className = "todo-description";
+
+           
+
+            const button = document.createElement("button");
+            button.innerHTML = "Mark as done";
+            button.onclick = function() { markAsDone(id); };
+
+            child.appendChild(titleDiv);
+            child.appendChild(descriptionDiv);
+            child.appendChild(button);
+
+            return child;
+        }
+
+        function addtodo() {
+            const titleInput = document.getElementById("tittle");
+    const descriptionInput = document.getElementById("Description");
+    const title = titleInput.value;
+    const description = descriptionInput.value;
+
+    if (title && description) {
+        const parent = document.getElementById("container");
+        parent.appendChild(createChild(title, description, globalId++));
+
+        
+        titleInput.value = '';
+        descriptionInput.value = '';
+
+       
+        titleInput.placeholder = 'Enter Title';
+        descriptionInput.placeholder = 'Enter Description';
+    } else {
+        alert("Please enter both a title and a description.");
+    }
+           
+        }
+
+        function markAsDone(id) {
+            const task = document.getElementById(id);
+            task.classList.add('completed');
+            const markDoneButton = task.querySelector("button");
+            markDoneButton.innerHTML = "Done";
+            markDoneButton.disabled = true;
+        }
+
+      
+    </script>
+   <div class="app-container">
+    <h1>Basic Todo App</h1>
+    <input type="text" placeholder="Enter Title" id="tittle"></input>
+    <br><br>
+    <input type="text" placeholder="Enter Description" id="Description"></input>
+    <br><br>
+    <button onclick="addtodo()">Add Todo</button>
+    <div id="container"></div>
+</div>
+    
+</body>
+</html>
